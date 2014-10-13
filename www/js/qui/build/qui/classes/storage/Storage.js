@@ -1,0 +1,2 @@
+var needle=["qui/classes/DOM"];("undefined"==typeof window.localStorage||"undefined"==typeof window.sessionStorage)&&needle.push("qui/classes/storage/Polyfill"),define(needle,function(e){"use strict";return new Class({Extends:e,Type:"qui/classes/storage/Storage",set:function(e,n){window.localStorage.setItem(e,n)},get:function(e){return window.localStorage.getItem(e)}})}),define("qui/classes/storage/Storage",function(){});
+//# sourceMappingURL=Storage.js.map

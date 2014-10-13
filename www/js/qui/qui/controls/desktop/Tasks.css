@@ -1,0 +1,43 @@
+
+.qui-taskpanel {
+    clear: both;
+    float: left;
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+.qui-taskpanel-container {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.qui-taskpanel .qui-btn2,
+.qui-taskpanel .qui-btn2-disable,
+.qui-taskpanel .qui-btn2-over,
+.qui-taskpanel .qui-task,
+.qui-taskpanel .qui-taskgroup {
+    margin: 1px;
+}
+
+.qui-taskpanel .qui-taskbar {
+    background: #DEDEDE;
+}
+
+.qui-taskpanel .qui-task {
+    background: #a4a9ae;
+    border: 1px solid #a4a9ae;
+    color: #FFFFFF;
+}
+
+.qui-taskpanel .qui-task.active {
+    background: #434a54;
+    border-color: #434a54;
+    color: #FFFFFF;
+}
+
+.qui-taskpanel .qui-task-text {
+    color: #FFFFFF;
+}

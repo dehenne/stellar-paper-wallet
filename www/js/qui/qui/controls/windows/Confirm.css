@@ -1,0 +1,17 @@
+
+/* Submit Window
+ ============================================== */
+
+.submit-body .texticon {
+    float: left;
+    margin-right: 20px;
+}
+
+.submit-body .textbody {
+    float: left;
+    width: calc( 100% - 80px );
+}
+
+.submit-body .information {
+    margin-top: 10px;
+}
