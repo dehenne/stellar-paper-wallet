@@ -142,16 +142,9 @@ define([
 
             scanner.scan( function (result)
             {
+                var data = JSON.decode( result.text );
 
-                alert("We got a barcode\n" +
-                "Result: " + result.text + "\n" +
-                "Format: " + result.format + "\n" +
-                "Cancelled: " + result.cancelled);
-                console.log("Scanner result: \n" +
-                "text: " + result.text + "\n" +
-                "format: " + result.format + "\n" +
-                "cancelled: " + result.cancelled + "\n");
-
+                alert( data.result.account_id );
 
             }, function (error)
             {
