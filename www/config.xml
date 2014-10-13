@@ -1,12 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget
-id="com.nexgam.schnaeppchenjaeger"
+id="com.pcsg.stellar-paper-wallet"
 version="1.0.0"
 xmlns="http://www.w3.org/ns/widgets"
 xmlns:gap="http://phonegap.com/ns/1.0"
 >
     <name>stellar - paper wallet</name>
-    <description></description>
+    <description>
+        Stellar Paper Wallet App. Create and read Paper Wallets for the digital currency Stellar.
+    </description>
     <author email="leutz@pcsg.de" href="http://www.pcsg.de">
         dehenne
     </author>
