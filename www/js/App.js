@@ -53,6 +53,8 @@ define([
          */
         create : function()
         {
+            var self = this;
+
             this.$Elm = new Element('div', {
                 'class' : 'app qui-box',
                 html    : '<header class="app-header">' +
@@ -94,9 +96,8 @@ define([
                 'class' : 'app-button-scan-wallet',
                 events  :
                 {
-                    onClick : function()
-                    {
-
+                    onClick : function() {
+                        self.scan();
                     }
                 }
             }).inject( this.$Body );
