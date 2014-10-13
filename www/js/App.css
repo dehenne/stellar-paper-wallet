@@ -4,11 +4,15 @@
     border-bottom: 2px solid #08b5e5;
     color: #08b5e5;
     float: left;
-    font-size: 18px;
-    line-height: 50px;
-    height: 50px;
+    font-size: 30px;
+    line-height: 100px;
+    height: 100px;
     text-align: center;
     width: 100%;
+}
+
+.app-header-title {
+    margin-left: 20px;
 }
 
 .app-body {
@@ -23,13 +27,14 @@
 .app-button-scan-wallet {
     clear: both;
     float: none !important;
-    font-size: 16px;
+    font-size: 30px;
     margin: 30px 10px 0 !important;
-    padding: 10px !important;
-    width: 300px;
+    max-width: 100%;
+    padding: 20px !important;
+    width: 500px;
 }
 
 .app-button-create-wallet .fa,
 .app-button-scan-wallet .fa {
-    font-size: 30px;
+    font-size: 60px;
 }

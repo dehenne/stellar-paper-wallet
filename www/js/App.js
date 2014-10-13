@@ -56,7 +56,13 @@ define([
             this.$Elm = new Element('div', {
                 'class' : 'app qui-box',
                 html    : '<header class="app-header">' +
-                              '<span>Stellar Paper Wallet</span>' +
+                              '<span class="fa fa-stack">'+
+                                  '<span class="fa fa-rocket fa-stack-1x"></span>' +
+                                  '<span class="fa fa-file-o fa-stack-2x"></span>' +
+                              '</span>'+
+                              '<span class="app-header-title">'+
+                                  'Stellar Paper Wallet'+
+                              '</span>' +
                           '</header>' +
                           '<main class="app-body"></main>'
             });
