@@ -3,6 +3,11 @@
  * Main app
  *
  * @author www.pcsg.de (Henning Leutz)
+ *
+ * @require qui/QUI
+ * @require qui/controls/Control
+ * @require qui/controls/loader/Loader
+ * @require css!App.css
  */
 
 define([
@@ -32,6 +37,9 @@ define([
 
             this.Loader = new QUILoader();
 
+            this.$Header = null;
+            this.$Body   = null;
+
             this.addEvents({
                 onInject : this.$onInject
             });
@@ -52,8 +60,23 @@ define([
 
             this.Loader.inject( this.$Elm );
 
+            this.$Header = this.$Elm.getElement( '.app-header' );
+            this.$Body   = this.$Elm.getElement( '.app-body' );
 
             return this.$Elm;
+        },
+
+        /**
+         * resize elements
+         */
+        resize : function()
+        {
+            var size  = document.body.getSize(),
+                hsize = this.$Header.getSize();
+
+            this.$Body.setStyles({
+                height : size.y - hsize.y
+            });
         },
 
         /**
@@ -62,6 +85,11 @@ define([
         $onInject : function()
         {
             this.Loader.show();
+
+            (function() {
+                this.resize();
+                this.Loader.hide();
+            }).delay( 100, this )
         }
     });
 

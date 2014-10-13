@@ -1,4 +1,14 @@
 
-.app {
+.app-header {
+    border-bottom: 2px solid #08b5e5;
+    float: left;
+    height: 50px;
+    width: 100%;
+}
 
+.app-body {
+    clear: both;
+    float: left;
+    overflow: auto;
+    width: 100%;
 }
