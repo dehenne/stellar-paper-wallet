@@ -36,4 +36,4 @@ document.addEventListener('deviceready', function()
     Init();
 }, false);
 
-Init();
+//Init();
