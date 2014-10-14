@@ -60,6 +60,8 @@ define([
          */
         create : function()
         {
+            var self = this;
+
             this.$Elm = new Element('div', {
                 'class' : 'qui-box wallet',
                 html    : '<div class="wallet-body">' +
