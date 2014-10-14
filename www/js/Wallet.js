@@ -187,21 +187,10 @@ define([
          */
         sendQRCode : function()
         {
-            window.plugins.emailComposer.showEmailComposerWithCallback(
-                function() {
-
-                },
-                'Stellar QR Code Wallet',
-                'test test',
-                null, // toRecipients
-                null, // ccRecipients
-                null, // bccRecipients
-                true, // isHtml
-                attachments, // attachments
-                [
-                  [ 'wallet.png' : this.$QRCode.getImage() ]
-                ] // attachmentsData
-            );
+            cordova.plugins.email.open({
+                subject     : 'Stellar Paper Wallet',
+                attachments : [ this.$QRCode.getImage() ]
+            });
         }
 
 
