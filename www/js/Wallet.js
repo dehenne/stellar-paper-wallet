@@ -43,6 +43,7 @@ define([
         {
             this.parent( options );
 
+            this.$QRCode          = null;
             this.$QRCodeContainer = null;
             this.$DataContainer   = null;
             this.$Buttons         = null;
@@ -93,7 +94,12 @@ define([
 
             new QUIButton({
                 textimage : 'fa fa-envelope',
-                text      : 'Send QR-Code'
+                text      : 'Send QR-Code',
+                events    : {
+                    onClick : function() {
+                        self.sendQRCode();
+                    }
+                }
             }).inject( this.$Buttons );
 
             new QUIButton({
@@ -153,14 +159,6 @@ define([
         },
 
         /**
-         * copy the stellar wallet address to the clipboard
-         */
-        copyToClipboard : function()
-        {
-            window.plugins.copy( this.getAttribute( 'account_id' ) );
-        },
-
-        /**
          * event : on inject
          * shows the wallet
          */
@@ -169,7 +167,43 @@ define([
             moofx( this.$Elm ).animate({
                 left : 0
             });
+        },
+
+        /**
+         * Action
+         */
+
+        /**
+         * copy the stellar wallet address to the clipboard
+         */
+        copyToClipboard : function()
+        {
+            window.plugins.copy( this.getAttribute( 'account_id' ) );
+        },
+
+
+        /**
+         *
+         */
+        sendQRCode : function()
+        {
+            window.plugins.emailComposer.showEmailComposerWithCallback(
+                function() {
+
+                },
+                'Stellar QR Code Wallet',
+                'test test',
+                null, // toRecipients
+                null, // ccRecipients
+                null, // bccRecipients
+                true, // isHtml
+                attachments, // attachments
+                [
+                  [ 'wallet.png' : this.$QRCode.getImage() ]
+                ] // attachmentsData
+            );
         }
+
 
     });
 });

@@ -123,6 +123,16 @@ define([
         getData : function()
         {
             return this.$data;
+        },
+
+        /**
+         * Return the image data
+         *
+         * @return {String} image data
+         */
+        getImage : function()
+        {
+            return this.$Elm.getElement( 'img' ).src;
         }
 
     });
