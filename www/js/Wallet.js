@@ -11,11 +11,13 @@ define([
 
     'qui/QUI',
     'qui/controls/Control',
+    'qui/controls/buttons/Button',
     'wallet/QRCode',
+    'Call',
 
     'css!Wallet.css'
 
-], function(QUI, QUIControl, QRCode)
+], function(QUI, QUIControl, QUIButton, QRCode, Call)
 {
     "use strict";
 
@@ -43,6 +45,7 @@ define([
 
             this.$QRCodeContainer = null;
             this.$DataContainer   = null;
+            this.$Buttons         = null;
 
             this.addEvents({
                 onInject : this.$onInject
@@ -59,6 +62,7 @@ define([
             this.$Elm = new Element('div', {
                 'class' : 'qui-box wallet',
                 html    : '<div class="wallet-body">' +
+                              '<div class="wallet-buttons"></div>' +
                               '<div class="wallet-data"></div>' +
                               '<div class="wallet-qrcode"></div>' +
                           '</div>',
@@ -69,13 +73,31 @@ define([
 
             this.$QRCodeContainer = this.$Elm.getElement( '.wallet-qrcode' );
             this.$DataContainer   = this.$Elm.getElement( '.wallet-data' );
+            this.$Buttons         = this.$Elm.getElement( '.wallet-buttons' );
+
+            // buttons
+            new QUIButton({
+                textimage : 'fa fa-copy',
+                text      : 'Copy Address'
+            }).inject( this.$Buttons );
+
+            new QUIButton({
+                textimage : 'fa fa-envelope',
+                text      : 'Send QR-Code'
+            }).inject( this.$Buttons );
+
+            new QUIButton({
+                textimage : 'fa fa-print',
+                text      : 'Print QR-Code'
+            }).inject( this.$Buttons );
 
 
+            // address data
             this.$DataContainer.set(
                 'html',
 
-                '<label for="">Stellar-Address</label>'+
-                '<div class="wallet-data-address">'+
+                '<div class="wallet-data-address">' +
+                    '<label>Stellar-Address</label>' +
                     this.getAttribute( 'account_id' ) +
                 '</div>'
             );
@@ -121,7 +143,8 @@ define([
         },
 
         /**
-         *
+         * event : on inject
+         * shows the wallet
          */
         $onInject : function()
         {

@@ -215,9 +215,6 @@ define([
             }, {
                 method : "create_keys"
             });
-
         }
-
-
     });
 });

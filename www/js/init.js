@@ -31,9 +31,18 @@ var Init = function()
     });
 }
 
-document.addEventListener('deviceready', function()
+var isPhonegap = function() {
+    return (typeof(cordova) !== 'undefined' || typeof(phonegap) !== 'undefined');
+}
+
+if ( isPhonegap() )
+{
+    document.addEventListener('deviceready', function()
+    {
+        Init();
+    }, false);
+
+} else
 {
     Init();
-}, false);
-
-Init();
+}
