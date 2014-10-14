@@ -46,6 +46,7 @@ define([
             this.$QRCodeContainer = null;
             this.$DataContainer   = null;
             this.$Buttons         = null;
+            this.$Balance         = null;
 
             this.addEvents({
                 onInject : this.$onInject
@@ -65,6 +66,7 @@ define([
                               '<div class="wallet-buttons"></div>' +
                               '<div class="wallet-data"></div>' +
                               '<div class="wallet-qrcode"></div>' +
+                              '<div class="wallet-balance"></div>' +
                           '</div>',
                 styles : {
                     left : '-110%'
@@ -74,11 +76,17 @@ define([
             this.$QRCodeContainer = this.$Elm.getElement( '.wallet-qrcode' );
             this.$DataContainer   = this.$Elm.getElement( '.wallet-data' );
             this.$Buttons         = this.$Elm.getElement( '.wallet-buttons' );
+            this.$Balance         = this.$Elm.getElement( '.wallet-balance' );
 
             // buttons
             new QUIButton({
                 textimage : 'fa fa-copy',
-                text      : 'Copy Address'
+                text      : 'Copy Address',
+                events    : {
+                    onClick : function() {
+                        self.copyToClipboard();
+                    }
+                }
             }).inject( this.$Buttons );
 
             new QUIButton({
@@ -140,6 +148,14 @@ define([
                     }
                 }.bind( this )
             });
+        },
+
+        /**
+         * copy the stellar wallet address to the clipboard
+         */
+        copyToClipboard : function()
+        {
+            window.plugins.copy( this.getAttribute( 'account_id' ) );
         },
 
         /**

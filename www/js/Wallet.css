@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 .wallet {
-    background: #FFFFFF;
+    background: #e4e4e4;
     left : 0;
     padding: 0 20px 20px;
     position: absolute;
@@ -20,7 +20,8 @@
 
 .wallet-buttons button {
     border-radius: 0;
-    padding: 10px;
+    font-size: 22px;
+    padding: 2px;
     width: 33.333333%
 }
 
@@ -31,12 +32,12 @@
 .wallet-body {
     max-width: 100%;
     margin: 0 auto;
-    width: 600px;
+    max-width: 100%;
+    width: 800px;
 }
 
 .wallet-data,
 .wallet-qrcode {
-    background: #efede8;
     clear: both;
     float: left;
     width: 100%;
