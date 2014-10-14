@@ -5,9 +5,9 @@ version="1.0.0"
 xmlns="http://www.w3.org/ns/widgets"
 xmlns:gap="http://phonegap.com/ns/1.0"
 >
-    <name>stellar - paper wallet</name>
+    <name>Stellar - Paper - Wallet</name>
     <description>
-        Stellar Paper Wallet App. Create and read Paper Wallets for the digital currency Stellar.
+        Stellar Paper Wallet App. Create and read paper wallets for the digital currency Stellar.
     </description>
     <author email="leutz@pcsg.de" href="http://www.pcsg.de">
         dehenne
