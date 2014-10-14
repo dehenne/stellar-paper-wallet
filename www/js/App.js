@@ -16,10 +16,13 @@ define([
     'qui/controls/Control',
     'qui/controls/loader/Loader',
     'qui/controls/buttons/Button',
+    'qui/controls/windows/Alert',
+    'Call',
+    'Wallet',
 
     'css!App.css'
 
-], function(QUI, QUIControl, QUILoader, QUIButton)
+], function(QUI, QUIControl, QUILoader, QUIButton, QUIAlert, Call, Wallet)
 {
     "use strict";
 
@@ -82,9 +85,8 @@ define([
                 'class' : 'app-button-create-wallet',
                 events  :
                 {
-                    onClick : function()
-                    {
-
+                    onClick : function() {
+                        self.createNewWallet();
                     }
                 }
             }).inject( this.$Body );
@@ -134,23 +136,88 @@ define([
         },
 
         /**
+         * QRCode Scan
+         */
+
+        /**
          * Start the barcode scanner
          */
         scan : function()
         {
-            var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+            var self    = this,
+                scanner = cordova.require( "cordova/plugin/BarcodeScanner" );
 
             scanner.scan( function (result)
             {
                 var data = JSON.decode( result.text );
 
-                alert( data.result.account_id );
+                if ( !data )
+                {
+                    self.showScanError();
+                    return;
+                }
+
+
+                if ( typeof data.result === 'undefined' ||
+                     typeof data.result.account_id === 'undefined' ||
+                     typeof data.result.public_key === 'undefined'
+                )
+                {
+                    self.showScanError();
+                    return;
+                }
+
+                self.Loader.show();
+
+                require(['Wallet'], function(Wallet) {
+                    new Wallet( data.result ).open();
+                });
 
             }, function (error)
             {
-
-
+                self.showScanError();
             });
+        },
+
+        /**
+         * Show an error
+         */
+        showScanError : function()
+        {
+            new QUIAlert({
+                title : 'Error at QR-Code Scanning',
+                text  : 'Sorry, an error has occured while scanning the QR.<br />'+
+                        'Perhaps the QR code is not a Stellar Wallet'
+            }).open()
+        },
+
+        /**
+         * New Wallet Creation
+         */
+
+        /**
+         * Create a new cold wallet
+         */
+        createNewWallet : function()
+        {
+            var self = this;
+
+            this.Loader.show( 'Create cold wallet ... one moment please ...' );
+
+            new Call().post(function(walletData)
+            {
+                if ( walletData.result ) {
+                    new Wallet( walletData.result ).inject( self.$Body );
+                }
+
+                self.Loader.hide();
+
+            }, {
+                method : "create_keys"
+            });
+
         }
+
+
     });
 });

@@ -1,0 +1,38 @@
+@CHARSET "UTF-8";
+
+.wallet {
+    background: #FFFFFF;
+    left : 0;
+    padding: 20px;
+    position: absolute;
+    top : 0;
+}
+
+.wallet-body {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    width: 600px;
+    outline: 1px solid red;
+}
+
+.wallet-data,
+.wallet-qrcode {
+    clear: both;
+    float: left;
+    width: 100%;
+}
+
+.wallet-data label {
+    clear: both;
+    float: left;
+    width: 100%;
+}
+
+.wallet-data-address {
+    clear: both;
+    float: left;
+    font-size: 24px;
+    margin-top: 10px;
+    width: 100%;
+}

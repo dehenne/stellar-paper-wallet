@@ -19,6 +19,7 @@
     clear: both;
     float: left;
     overflow: auto;
+    position: relative;
     text-align: center;
     width: 100%;
 }
