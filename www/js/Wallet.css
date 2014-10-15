@@ -20,8 +20,8 @@
 
 .wallet-buttons button {
     border-radius: 0;
-    font-size: 22px;
-    padding: 20px;
+    font-size: 14px;
+    padding: 10px;
     width: 50%
 }
 
@@ -52,19 +52,19 @@
 .wallet-data-address {
     clear: both;
     float: left;
-    font-size: 24px;
+    font-size: 14px;
     margin-top: 10px;
     padding: 10px;
     width: 100%;
 }
 
 .wallet-data-address label {
-    font-size: 12px;
+    font-size: 10px;
 }
 
 
 .wallet-balance {
-    font-size: 30px;
+    font-size: 20px;
 }
 
 

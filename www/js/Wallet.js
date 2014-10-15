@@ -114,14 +114,6 @@ define([
                 '</div>'
             );
 
-            // create qrcode of the wallet
-            this.$QRCode = new QRCode({
-                styles : {
-                    margin : '20px auto'
-                }
-            }).inject( this.$QRCodeContainer );
-
-
             return this.$Elm
         },
 
@@ -151,17 +143,8 @@ define([
          */
         $onInject : function()
         {
-            this.$QRCode.setData({
-                "account_id"      : this.getAttribute( 'account_id' ),
-                "server"          : this.getAttribute( 'server' ),
-                //"master_seed"     : this.getAttribute( 'master_seed' ),
-                //"master_seed_hex" : this.getAttribute( 'master_seed_hex' ),
-                "public_key"      : this.getAttribute( 'public_key' ),
-                "public_key_hex"  : this.getAttribute( 'public_key_hex' ),
-                "status"          : this.getAttribute( 'status' )
-            });
-
             var self = this;
+
 
             moofx( this.$Elm ).animate({
                 left : 0
@@ -170,6 +153,33 @@ define([
                 {
                     self.getAccountInfo(function(result)
                     {
+                        var width = self.$QRCodeContainer.getSize().x;
+
+                        if ( width > 400 ) {
+                            width = 400;
+                        }
+
+                        // create qr code
+                        self.$QRCode = new QRCode({
+                            height : width,
+                            width  : width,
+                            styles : {
+                                margin : '20px auto'
+                            }
+                        }).inject( self.$QRCodeContainer );
+
+                        self.$QRCode.setData({
+                            "account_id"      : self.getAttribute( 'account_id' ),
+                            "server"          : self.getAttribute( 'server' ),
+                            //"master_seed"     : this.getAttribute( 'master_seed' ),
+                            //"master_seed_hex" : this.getAttribute( 'master_seed_hex' ),
+                            "public_key"      : self.getAttribute( 'public_key' ),
+                            "public_key_hex"  : self.getAttribute( 'public_key_hex' ),
+                            "status"          : self.getAttribute( 'status' )
+                        });
+
+
+
                         if ( typeof result.result.error !== 'undefined' )
                         {
                             if ( result.result.error_code != 15 )
