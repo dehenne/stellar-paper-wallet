@@ -28,12 +28,15 @@ define(['qui/classes/DOM'], function(QDOM)
             var R = new Request({
                 method    : type,
                 url       : this.getAttribute( 'server' ),
+                async     : true,
+                noCache   : true,
                 onSuccess : function(result)
                 {
                     callback( JSON.decode( result ) );
                 }
             });
 
+            // cors
             delete R.headers['X-Requested-With'];
 
             R.send( JSON.encode( params ));

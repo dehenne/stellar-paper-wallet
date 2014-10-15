@@ -36,7 +36,8 @@ define([
             "master_seed_hex" : "",
             "public_key"      : "",
             "public_key_hex"  : "",
-            "status"          : ""
+            "status"          : "",
+            "server"          : ""
         },
 
         initialize : function(options)
@@ -127,8 +128,9 @@ define([
 
             this.$QRCode.setData({
                 "account_id"      : this.getAttribute( 'account_id' ),
-                "master_seed"     : this.getAttribute( 'master_seed' ),
-                "master_seed_hex" : this.getAttribute( 'master_seed_hex' ),
+                "server"          : this.getAttribute( 'server' ),
+                //"master_seed"     : this.getAttribute( 'master_seed' ),
+                //"master_seed_hex" : this.getAttribute( 'master_seed_hex' ),
                 "public_key"      : this.getAttribute( 'public_key' ),
                 "public_key_hex"  : this.getAttribute( 'public_key_hex' ),
                 "status"          : this.getAttribute( 'status' )
@@ -187,6 +189,8 @@ define([
          */
         sendQRCode : function()
         {
+            alert( this.$QRCode.getImage() );
+
             cordova.plugins.email.open({
                 subject     : 'Stellar Paper Wallet',
                 attachments : [ this.$QRCode.getImage() ]

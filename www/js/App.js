@@ -43,6 +43,9 @@ define([
 
             this.$Header = null;
             this.$Body   = null;
+            this.$Wallet = null;
+
+            this.$MenuButton = null;
 
             this.addEvents({
                 onInject : this.$onInject
@@ -105,6 +108,18 @@ define([
             }).inject( this.$Body );
 
 
+            this.$MenuButton = new QUIButton({
+                'class' : 'app-header-menuButton',
+                icon    : 'fa fa-bars',
+                events  :
+                {
+                    onClick : function()
+                    {
+
+                    }
+                }
+            }).inject( this.$Header );
+
 
             return this.$Elm;
         },
@@ -133,6 +148,37 @@ define([
                 this.resize();
                 this.Loader.hide();
             }).delay( 100, this )
+        },
+
+        /**
+         * Opens a wallet
+         *
+         * @param {Object} walletData
+         */
+        openWallet : function(walletData)
+        {
+            var self = this;
+
+            require(['Wallet'], function(Wallet)
+            {
+                self.$Wallet = new Wallet( walletData ).inject( self.$Body );
+
+                new QUIButton({
+                    'class' : 'app-header-walletClose',
+                    icon    : 'fa fa-chevron-left',
+                    events  :
+                    {
+                        onClick : function(Btn)
+                        {
+                            self.$Wallet.close(function() {
+                                self.$Wallet = null;
+                            });
+
+                            Btn.destroy();
+                        }
+                    }
+                }).inject( self.$Header );
+            });
         },
 
         /**
@@ -168,10 +214,7 @@ define([
                 }
 
                 self.Loader.show();
-
-                require(['Wallet'], function(Wallet) {
-                    new Wallet( data.result ).open();
-                });
+                self.openWallet( data.result );
 
             }, function (error)
             {
@@ -200,14 +243,20 @@ define([
          */
         createNewWallet : function()
         {
-            var self = this;
+            var self    = this,
+                Request = new Call();
 
             this.Loader.show( 'Create cold wallet ... one moment please ...' );
 
-            new Call().post(function(walletData)
+            Request.post(function(walletData)
             {
-                if ( walletData.result ) {
-                    new Wallet( walletData.result ).inject( self.$Body );
+                if ( walletData.result )
+                {
+                    var data = walletData.result;
+
+                    data.server = Request.getAttribute( 'server' );
+
+                    self.openWallet( data );
                 }
 
                 self.Loader.hide();

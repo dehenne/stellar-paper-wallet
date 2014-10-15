@@ -11,6 +11,32 @@
     width: 100%;
 }
 
+.app-header-walletClose {
+    background: #FFFFFF !important;
+    border-right: 2px solid #ededed !important;
+    border-radius: 0px  !important;
+    box-shadow: none  !important;
+    font-size: 20px;
+    left: 4px;
+    line-height: 90px !important;
+    position: absolute !important;
+    top: 4px;
+    width: 90px;
+}
+
+.app-header-menuButton {
+    background: #FFFFFF !important;
+    border-left: 2px solid #ededed !important;
+    border-radius: 0px  !important;
+    box-shadow: none  !important;
+    font-size: 20px;
+    line-height: 90px !important;
+    position: absolute !important;
+    right: 4px;
+    top: 4px;
+    width: 90px;
+}
+
 .app-header-title {
     margin-left: 20px;
 }
