@@ -193,10 +193,15 @@ define([
          */
         sendQRCode : function()
         {
-            cordova.plugins.email.open({
-                subject     : 'Stellar Paper Wallet',
-                attachments : [ this.$QRCode.getImage() ]
+            cordova.plugins.email.isAvailable(function (isAvailable)
+            {
+                alert('Service is not available') unless isAvailable;
             });
+
+//            cordova.plugins.email.open({
+//                subject     : 'Stellar Paper Wallet',
+//                attachments : [ this.$QRCode.getImage() ]
+//            });
         }
 
 

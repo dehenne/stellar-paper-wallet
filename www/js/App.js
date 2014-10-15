@@ -219,7 +219,7 @@ define([
 
                 if ( !data )
                 {
-                    self.showScanError();
+                    self.showScanError( '' );
                     return;
                 }
 
@@ -247,12 +247,15 @@ define([
          */
         showScanError : function(error)
         {
-            alert( error );
+            if ( typeof error === 'undefined' ) {
+                error = 'Perhaps the QR code is not a Stellar Wallet.';
+            }
 
             new QUIAlert({
                 title   : 'Error at QR-Code Scanning',
-                message : 'Sorry, an error has occured while scanning the QR.<br />'+
-                          'Perhaps the QR code is not a Stellar Wallet'
+                message : 'Sorry, an error has occured while scanning the QR.<br />' +
+                          '<br />' +
+                          error
             }).open()
         },
 
