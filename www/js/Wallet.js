@@ -189,10 +189,12 @@ define([
 
 
         /**
-         *
+         * Send QR Code
          */
         sendQRCode : function()
         {
+            var self = this;
+
             window.plugin.email.isServiceAvailable(function (isAvailable)
             {
                 if ( !isAvailable )
@@ -203,7 +205,7 @@ define([
 
                 window.plugin.email.open({
                     subject     : 'Stellar Paper Wallet',
-                    attachments : [ this.$QRCode.getImage() ]
+                    attachments : [ self.$QRCode.getImage() ]
                 });
             });
         }
