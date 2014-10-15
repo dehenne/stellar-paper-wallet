@@ -183,7 +183,7 @@ define([
                             }
 
                             // no balance?
-
+                            self.$Balance.set( 'html', 'Balance: 0 STR' );
                             self.fireEvent( 'loaded' );
                             return;
                         }
