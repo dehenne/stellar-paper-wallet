@@ -245,14 +245,16 @@ define([
                     self.fireEvent( 'mouseup', [ self, event ] );
                 },
 
-                blur : function(event)
-                {
+                blur : function(event) {
                     self.fireEvent( 'blur', [ self, event ] );
                 },
 
-                focus : function(event)
-                {
+                focus : function(event) {
                     self.fireEvent( 'focus', [ self, event ] );
+                },
+
+                touchend : function() {
+                    alert( 1 );
                 }
             });
 
