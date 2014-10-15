@@ -223,6 +223,7 @@ define([
                     return;
                 }
 
+                console.log( data );
 
                 if ( typeof data.result === 'undefined' ||
                      typeof data.result.account_id === 'undefined' ||

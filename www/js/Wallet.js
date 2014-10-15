@@ -193,18 +193,20 @@ define([
          */
         sendQRCode : function()
         {
-            cordova.plugins.email.isAvailable(function (isAvailable)
+            window.plugin.email.isServiceAvailable(function (isAvailable)
             {
-                alert( isAvailable );
-                //alert('Service is not available');
+                if ( !isAvailable )
+                {
+
+                    return;
+                }
+
+                window.plugin.email.open({
+                    subject     : 'Stellar Paper Wallet',
+                    attachments : [ this.$QRCode.getImage() ]
+                });
             });
-
-//            cordova.plugins.email.open({
-//                subject     : 'Stellar Paper Wallet',
-//                attachments : [ this.$QRCode.getImage() ]
-//            });
         }
-
-
     });
+
 });
