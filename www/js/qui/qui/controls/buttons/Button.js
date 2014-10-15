@@ -197,6 +197,8 @@ define([
                         return;
                     }
 
+                    alert( 'elm click!' );
+
                     self.onclick( event );
                 },
 
