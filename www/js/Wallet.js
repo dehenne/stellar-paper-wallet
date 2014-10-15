@@ -146,26 +146,6 @@ define([
         },
 
         /**
-         *
-         */
-        getAccountInfo : function(callback)
-        {
-            new Call({
-                server : this.getAttribute( 'server' )
-            }).post(function(result)
-            {
-                callback( result );
-
-            }, {
-                method: "account_info",
-                params: [{
-                     account: this.getAttribute( 'account_id' ),
-                     ledger_index: 400
-                }]
-            });
-        },
-
-        /**
          * event : on inject
          * shows the wallet
          */
@@ -192,14 +172,23 @@ define([
                     {
                         if ( typeof result.result.error !== 'undefined' )
                         {
-                            new QUIAlert({
-                                content : result.result.error_message
-                            }).open();
+                            if ( result.result.error_code != 15 )
+                            {
+                                new QUIAlert({
+                                    content : result.result.error_message
+                                }).open();
 
-                            self.fireEvent( 'loadError' );
+                                self.fireEvent( 'loadError' );
+                                return;
+                            }
 
+                            // no balance?
+
+                            self.fireEvent( 'loaded' );
                             return;
                         }
+
+                        console.log( result );
 
                         self.fireEvent( 'loaded' );
                     });
@@ -227,6 +216,14 @@ define([
         {
             var self = this;
 
+            window.plugins.socialsharing.share(
+                'stellar paper wallet',
+                null,
+                self.$QRCode.getImage()
+            );
+
+
+            /*
             window.plugin.email.isServiceAvailable(function (isAvailable)
             {
                 if ( !isAvailable )
@@ -240,7 +237,36 @@ define([
                     attachments : [ self.$QRCode.getImage() ]
                 });
             });
-        }
+            */
+        },
+
+
+        /**
+         * Stellar Call Methods
+         */
+
+        /**
+         * Return the account info
+         *
+         * @param {Function} callback
+         */
+        getAccountInfo : function(callback)
+        {
+            new Call({
+                server : this.getAttribute( 'server' )
+            }).post(function(result)
+            {
+                callback( result );
+
+            }, {
+                method: "account_info",
+                params: [{
+                     account: this.getAttribute( 'account_id' ),
+                     ledger_index: 400
+                }]
+            });
+        },
+
     });
 
 });
