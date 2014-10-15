@@ -233,7 +233,6 @@ define([
                     }
 
                     self.fireEvent( 'mousedown', [ self, event ] );
-
                 },
 
                 mouseup : function(event)
@@ -251,10 +250,6 @@ define([
 
                 focus : function(event) {
                     self.fireEvent( 'focus', [ self, event ] );
-                },
-
-                touchend : function() {
-                    alert( 1 );
                 }
             });
 
@@ -328,6 +323,12 @@ define([
         {
             if ( this.isDisabled() ) {
                 return;
+            }
+
+            if ( (typeof(cordova) !== 'undefined' || typeof(phonegap) !== 'undefined') &&
+                 !this.$items.length )
+            {
+                this.setNormal();
             }
 
             this.fireEvent( 'click', [ this, event ] );
