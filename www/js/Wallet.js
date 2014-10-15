@@ -193,8 +193,6 @@ define([
          */
         sendQRCode : function()
         {
-            alert( this.$QRCode.getImage() );
-
             cordova.plugins.email.open({
                 subject     : 'Stellar Paper Wallet',
                 attachments : [ this.$QRCode.getImage() ]
