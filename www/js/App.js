@@ -17,12 +17,13 @@ define([
     'qui/controls/loader/Loader',
     'qui/controls/buttons/Button',
     'qui/controls/windows/Alert',
+    'menu/Responsive',
     'Call',
     'Wallet',
 
     'css!App.css'
 
-], function(QUI, QUIControl, QUILoader, QUIButton, QUIAlert, Call, Wallet)
+], function(QUI, QUIControl, QUILoader, QUIButton, QUIAlert, Menu, Call, Wallet)
 {
     "use strict";
 
@@ -40,6 +41,7 @@ define([
             this.parent( options );
 
             this.Loader = new QUILoader();
+            this.Menu   = new Menu();
 
             this.$Header = null;
             this.$Body   = null;
@@ -77,6 +79,26 @@ define([
 
             this.Loader.inject( this.$Elm );
 
+            this.Menu.inject( document.body );
+
+            this.Menu.appendChild({
+                text   : 'Settings',
+                icon   : 'fa fa-gears',
+                events : {
+                    click : function() {
+                        alert( 'settings' );
+                    }
+                }
+            }).appendChild({
+                text : 'About',
+                icon : 'fa fa-info',
+                events : {
+                    click : function() {
+                        alert( 'about' );
+                    }
+                }
+            })
+
 
             this.$Header = this.$Elm.getElement( '.app-header' );
             this.$Body   = this.$Elm.getElement( '.app-body' );
@@ -113,9 +135,8 @@ define([
                 icon    : 'fa fa-bars',
                 events  :
                 {
-                    onClick : function()
-                    {
-
+                    onClick : function() {
+                        self.Menu.toggle();
                     }
                 }
             }).inject( this.$Header );
