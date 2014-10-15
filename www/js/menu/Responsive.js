@@ -141,7 +141,7 @@ define([
 
             var self  = this,
                 size  = document.body.getSize(),
-                width = 600;
+                width = 400;
 
             if ( width > size.x * 0.9 ) {
                 width = size.x * 0.9;

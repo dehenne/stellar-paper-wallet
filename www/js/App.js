@@ -66,7 +66,7 @@ define([
             this.$Elm = new Element('div', {
                 'class' : 'app qui-box',
                 html    : '<header class="app-header">' +
-                              '<span class="fa fa-stack">'+
+                              '<span class="fa fa-stack app-header-logo">'+
                                   '<span class="fa fa-rocket fa-stack-1x"></span>' +
                                   '<span class="fa fa-file-o fa-stack-2x"></span>' +
                               '</span>'+
