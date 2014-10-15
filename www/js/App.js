@@ -231,8 +231,12 @@ define([
                     return;
                 }
 
-                self.Loader.show();
-                self.openWallet( data );
+                // delay 200, becaus cam needs its time to close
+                (function()
+                {
+                    self.Loader.show();
+                    self.openWallet( data );
+                }).delay( 200 );
 
             }, function (error)
             {
@@ -249,12 +253,17 @@ define([
                 error = 'Perhaps the QR code is not a Stellar Wallet.';
             }
 
-            new QUIAlert({
-                title   : 'Error at QR-Code Scanning',
-                content : 'Sorry, an error has occured while scanning the QR.<br />' +
-                          '<br />' +
-                          error
-            }).open()
+            // delay 200, becaus cam needs its time to close
+            (function()
+            {
+                new QUIAlert({
+                    title   : 'Error at QR-Code Scanning',
+                    content : 'Sorry, an error has occured while scanning the QR.<br />' +
+                              '<br />' +
+                              error
+                }).open();
+
+            }).delay( 200 );
         },
 
         /**
