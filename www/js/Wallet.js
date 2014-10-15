@@ -12,12 +12,13 @@ define([
     'qui/QUI',
     'qui/controls/Control',
     'qui/controls/buttons/Button',
+    'qui/controls/windows/Alert',
     'wallet/QRCode',
     'Call',
 
     'css!Wallet.css'
 
-], function(QUI, QUIControl, QUIButton, QRCode, Call)
+], function(QUI, QUIControl, QUIButton, QUIAlert, QRCode, Call)
 {
     "use strict";
 
@@ -85,7 +86,7 @@ define([
             // buttons
             new QUIButton({
                 textimage : 'fa fa-copy',
-                text      : 'Copy Address',
+                text      : 'Copy to Clipboard',
                 events    : {
                     onClick : function() {
                         self.copyToClipboard();
@@ -95,19 +96,13 @@ define([
 
             new QUIButton({
                 textimage : 'fa fa-envelope',
-                text      : 'Send QR-Code',
+                text      : 'Send / Save',
                 events    : {
                     onClick : function() {
                         self.sendQRCode();
                     }
                 }
             }).inject( this.$Buttons );
-
-            new QUIButton({
-                textimage : 'fa fa-print',
-                text      : 'Print QR-Code'
-            }).inject( this.$Buttons );
-
 
             // address data
             this.$DataContainer.set(
@@ -151,6 +146,26 @@ define([
         },
 
         /**
+         *
+         */
+        getAccountInfo : function(callback)
+        {
+            new Call({
+                server : this.getAttribute( 'server' )
+            }).post(function(result)
+            {
+                callback( result );
+
+            }, {
+                method: "account_info",
+                params: [{
+                     account: this.getAttribute( 'account_id' ),
+                     ledger_index: 400
+                }]
+            });
+        },
+
+        /**
          * event : on inject
          * shows the wallet
          */
@@ -166,12 +181,29 @@ define([
                 "status"          : this.getAttribute( 'status' )
             });
 
+            var self = this;
+
             moofx( this.$Elm ).animate({
                 left : 0
             }, {
-                callback : function() {
-                    this.fireEvent( 'loaded' );
-                }.bind( this )
+                callback : function()
+                {
+                    self.getAccountInfo(function(result)
+                    {
+                        if ( typeof result.result.error !== 'undefined' )
+                        {
+                            new QUIAlert({
+                                content : result.result.error_message
+                            }).open();
+
+                            self.fireEvent( 'loadError' );
+
+                            return;
+                        }
+
+                        self.fireEvent( 'loaded' );
+                    });
+                }
             });
         },
 

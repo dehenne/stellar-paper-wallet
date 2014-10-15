@@ -195,7 +195,10 @@ define([
                     },
                     onLoaded : function() {
                         self.Loader.hide();
-                    }
+                    },
+                    onLoadError : function() {
+                        self.Loader.hide();
+                    },
                 });
 
             });

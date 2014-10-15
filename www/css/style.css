@@ -55,3 +55,8 @@ a.qui-button {
     box-shadow: 0 0 2px #999;
     color: #08b5e5 !important;
 }
+
+.qui-windows-alert .qui-window-popup-content {
+    font-size: 30px;
+    text-align: center;
+}

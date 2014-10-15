@@ -61,7 +61,16 @@
     width: 500px;
 }
 
-.app-button-create-wallet .fa,
-.app-button-scan-wallet .fa {
+.app-button-create-wallet .fa {
     font-size: 60px;
+}
+
+
+.app-button-scan-wallet {
+    padding: 40px 20px !important;
+}
+
+.app-button-scan-wallet .fa {
+    font-size: 100px;
+    margin-bottom: 20px;
 }
