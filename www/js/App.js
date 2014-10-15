@@ -223,11 +223,8 @@ define([
                     return;
                 }
 
-                console.log( data );
-
-                if ( typeof data.result === 'undefined' ||
-                     typeof data.result.account_id === 'undefined' ||
-                     typeof data.result.public_key === 'undefined'
+                if ( typeof data.account_id === 'undefined' ||
+                     typeof data.public_key === 'undefined'
                 )
                 {
                     self.showScanError( 'Stellar wallet data corrupt.' );
@@ -235,7 +232,7 @@ define([
                 }
 
                 self.Loader.show();
-                self.openWallet( data.result );
+                self.openWallet( data );
 
             }, function (error)
             {
