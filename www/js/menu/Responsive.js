@@ -188,7 +188,7 @@ define([
             this.$Background.hide();
 
             this.$FX.animate({
-                left : -500
+                left : '-100%'
             });
         }
     });
