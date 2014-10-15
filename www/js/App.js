@@ -238,19 +238,21 @@ define([
 
             }, function (error)
             {
-                self.showScanError();
+                self.showScanError( error );
             });
         },
 
         /**
          * Show an error
          */
-        showScanError : function()
+        showScanError : function(error)
         {
+            alert( error );
+
             new QUIAlert({
-                title : 'Error at QR-Code Scanning',
-                text  : 'Sorry, an error has occured while scanning the QR.<br />'+
-                        'Perhaps the QR code is not a Stellar Wallet'
+                title   : 'Error at QR-Code Scanning',
+                message : 'Sorry, an error has occured while scanning the QR.<br />'+
+                          'Perhaps the QR code is not a Stellar Wallet'
             }).open()
         },
 
