@@ -197,8 +197,6 @@ define([
                         return;
                     }
 
-                    alert( 'elm click!' );
-
                     self.onclick( event );
                 },
 
@@ -235,6 +233,7 @@ define([
                     }
 
                     self.fireEvent( 'mousedown', [ self, event ] );
+
                 },
 
                 mouseup : function(event)
@@ -246,20 +245,14 @@ define([
                     self.fireEvent( 'mouseup', [ self, event ] );
                 },
 
-                blur : function(event) {
+                blur : function(event)
+                {
                     self.fireEvent( 'blur', [ self, event ] );
                 },
 
-                focus : function(event) {
+                focus : function(event)
+                {
                     self.fireEvent( 'focus', [ self, event ] );
-                },
-
-                touchend : function() {
-                    alert( 'touchend' );
-                },
-
-                touchcancel : function() {
-                    alert( 'touchcancel' );
                 }
             });
 
@@ -336,8 +329,6 @@ define([
             }
 
             this.fireEvent( 'click', [ this, event ] );
-
-            alert( 'click' );
         },
 
         /**

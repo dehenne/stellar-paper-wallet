@@ -14,6 +14,11 @@ require.config({
 
 var Init = function()
 {
+    document.body.on('click', function(startEvent)
+    {
+        alert( 'click' );
+    });
+
     require(['qui/QUI'], function(QUI)
     {
         QUI.addEvent('onError', function( err, url, line )
