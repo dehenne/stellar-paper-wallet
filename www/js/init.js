@@ -14,7 +14,7 @@ require.config({
 
 var Init = function()
 {
-    document.body.on('click', function(startEvent)
+    document.body.addEvent('click', function(startEvent)
     {
         alert( 'click' );
     });
