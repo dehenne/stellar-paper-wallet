@@ -9,7 +9,7 @@ Smartphone App for creating and handling stellar paper wallets.
 Note
 --------
 
-* The app never stores the wallet keys on the phone.
+* The app never stores the wallet keys on the phone. If you dont print / save your wallet, the 'stellar wallet' is lost.
 * The keys are kept only as long as the wallet is open.
 * The paper wallets (images, pdf) should not be stored on the phone for a long time.
 
