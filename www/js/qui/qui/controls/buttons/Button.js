@@ -325,12 +325,6 @@ define([
                 return;
             }
 
-            if ( (typeof(cordova) !== 'undefined' || typeof(phonegap) !== 'undefined') &&
-                 !this.$items.length )
-            {
-                this.setNormal();
-            }
-
             this.fireEvent( 'click', [ this, event ] );
         },
 
