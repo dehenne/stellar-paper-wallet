@@ -76,16 +76,16 @@
 }
 
 .qcm-responsive-content-entry-icon {
-    font-size: 16px;
+    font-size: 24px;
     text-align: center;
-    width: 30px;
+    width: 40px;
 }
 
 .qcm-responsive-content-entry-text {
     color: #444444;
     cursor: pointer;
     display: table-cell;
-    font-size: 16px;
+    font-size: 24px;
     padding: 10px 0 10px 10px;
 }
 

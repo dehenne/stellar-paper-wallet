@@ -62,7 +62,7 @@ define([
                 'class' : 'qui-controls-menu-responsive',
                 html    : '<div class="qcm-responsive-title">'+
                               '<div class="qcm-responsive-title-home">' +
-                                  '<span>Menü</span>' +
+                                  '<span>Menu</span>' +
                               '</div>' +
                               '<div class="qcm-responsive-title-close icon-remove fa fa-remove"></div>' +
                           '</div>' +
@@ -141,7 +141,7 @@ define([
 
             var self  = this,
                 size  = document.body.getSize(),
-                width = 400;
+                width = 600;
 
             if ( width > size.x * 0.9 ) {
                 width = size.x * 0.9;
