@@ -150,6 +150,10 @@ define([
                 }
             }, false);
 
+            document.addEventListener("menubutton", function() {
+                self.Menu.toggle();
+            }, false);
+
 
             return this.$Elm;
         },
