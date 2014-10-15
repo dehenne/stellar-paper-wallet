@@ -219,7 +219,7 @@ define([
 
                 if ( !data )
                 {
-                    self.showScanError( '' );
+                    self.showScanError( 'No Stellar wallet data found.' );
                     return;
                 }
 
@@ -229,7 +229,7 @@ define([
                      typeof data.result.public_key === 'undefined'
                 )
                 {
-                    self.showScanError();
+                    self.showScanError( 'Stellar wallet data corrupt.' );
                     return;
                 }
 
