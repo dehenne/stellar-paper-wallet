@@ -14,18 +14,6 @@ require.config({
 
 var Init = function()
 {
-    document.body.addEvent('click', function(event)
-    {
-        // ok i dont know if it is a good idea
-        // but phonegap dont blur my buttons :-/
-        (function()
-        {
-            if ( document.activeElement.nodeName == 'BUTTON' ) {
-                document.activeElement.fireEvent( 'blur', [ event ] );
-            }
-        }).delay( 20 );
-    });
-
     require(['qui/QUI'], function(QUI)
     {
         QUI.addEvent('onError', function( err, url, line )
