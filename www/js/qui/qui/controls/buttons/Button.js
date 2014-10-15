@@ -334,6 +334,8 @@ define([
             }
 
             this.fireEvent( 'click', [ this, event ] );
+
+            alert( 'click' );
         },
 
         /**
