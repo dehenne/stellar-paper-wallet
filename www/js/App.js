@@ -121,6 +121,16 @@ define([
             }).inject( this.$Header );
 
 
+            // events
+            document.addEventListener("backbutton", function()
+            {
+                if ( self.$Wallet ) {
+                    self.$Wallet.close();
+                }
+            }, false);
+
+
+
             return this.$Elm;
         },
 
@@ -163,7 +173,7 @@ define([
             {
                 self.$Wallet = new Wallet( walletData ).inject( self.$Body );
 
-                new QUIButton({
+                var Btn = new QUIButton({
                     'class' : 'app-header-walletClose',
                     icon    : 'fa fa-chevron-left',
                     events  :
@@ -173,11 +183,13 @@ define([
                             self.$Wallet.close(function() {
                                 self.$Wallet = null;
                             });
-
-                            Btn.destroy();
                         }
                     }
                 }).inject( self.$Header );
+
+                self.$Wallet.addEvent('onDestroy', function() {
+                    Btn.destroy();
+                });
             });
         },
 

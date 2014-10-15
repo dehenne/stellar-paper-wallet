@@ -37,8 +37,7 @@ var isPhonegap = function() {
 
 if ( isPhonegap() )
 {
-    document.addEventListener('deviceready', function()
-    {
+    document.addEventListener('deviceready', function() {
         Init();
     }, false);
 
