@@ -126,16 +126,6 @@ define([
                 }
             }).inject( this.$QRCodeContainer );
 
-            this.$QRCode.setData({
-                "account_id"      : this.getAttribute( 'account_id' ),
-                "server"          : this.getAttribute( 'server' ),
-                //"master_seed"     : this.getAttribute( 'master_seed' ),
-                //"master_seed_hex" : this.getAttribute( 'master_seed_hex' ),
-                "public_key"      : this.getAttribute( 'public_key' ),
-                "public_key_hex"  : this.getAttribute( 'public_key_hex' ),
-                "status"          : this.getAttribute( 'status' )
-            });
-
 
             return this.$Elm
         },
@@ -166,8 +156,22 @@ define([
          */
         $onInject : function()
         {
+            this.$QRCode.setData({
+                "account_id"      : this.getAttribute( 'account_id' ),
+                "server"          : this.getAttribute( 'server' ),
+                //"master_seed"     : this.getAttribute( 'master_seed' ),
+                //"master_seed_hex" : this.getAttribute( 'master_seed_hex' ),
+                "public_key"      : this.getAttribute( 'public_key' ),
+                "public_key_hex"  : this.getAttribute( 'public_key_hex' ),
+                "status"          : this.getAttribute( 'status' )
+            });
+
             moofx( this.$Elm ).animate({
                 left : 0
+            }, {
+                callback : function() {
+                    this.fireEvent( 'loaded' );
+                }.bind( this )
             });
         },
 

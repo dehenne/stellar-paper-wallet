@@ -130,7 +130,6 @@ define([
             }, false);
 
 
-
             return this.$Elm;
         },
 
@@ -169,6 +168,8 @@ define([
         {
             var self = this;
 
+            this.Loader.show();
+
             require(['Wallet'], function(Wallet)
             {
                 self.$Wallet = new Wallet( walletData ).inject( self.$Body );
@@ -187,9 +188,16 @@ define([
                     }
                 }).inject( self.$Header );
 
-                self.$Wallet.addEvent('onDestroy', function() {
-                    Btn.destroy();
+
+                self.$Wallet.addEvents({
+                    onDestroy : function() {
+                        Btn.destroy();
+                    },
+                    onLoaded : function() {
+                        self.Loader.hide();
+                    }
                 });
+
             });
         },
 
@@ -270,8 +278,6 @@ define([
 
                     self.openWallet( data );
                 }
-
-                self.Loader.hide();
 
             }, {
                 method : "create_keys"
