@@ -250,6 +250,14 @@ define([
 
                 focus : function(event) {
                     self.fireEvent( 'focus', [ self, event ] );
+                },
+
+                touchend : function() {
+                    alert( 'touchend' );
+                },
+
+                touchcancel : function() {
+                    alert( 'touchcancel' );
                 }
             });
 
