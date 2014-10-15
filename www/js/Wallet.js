@@ -195,7 +195,8 @@ define([
         {
             cordova.plugins.email.isAvailable(function (isAvailable)
             {
-                alert('Service is not available') unless isAvailable;
+                alert( isAvailable );
+                //alert('Service is not available');
             });
 
 //            cordova.plugins.email.open({

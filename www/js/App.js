@@ -253,7 +253,7 @@ define([
 
             new QUIAlert({
                 title   : 'Error at QR-Code Scanning',
-                message : 'Sorry, an error has occured while scanning the QR.<br />' +
+                content : 'Sorry, an error has occured while scanning the QR.<br />' +
                           '<br />' +
                           error
             }).open()
