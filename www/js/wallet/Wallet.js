@@ -6,7 +6,6 @@
  * @author www.pcsg.de (Henning Leutz)
  */
 
-
 define([
 
     'qui/QUI',
@@ -14,11 +13,11 @@ define([
     'qui/controls/buttons/Button',
     'qui/controls/windows/Alert',
     'wallet/QRCode',
-    'Call',
+    'request/Stellar',
 
-    'css!Wallet.css'
+    'css!wallet/Wallet.css'
 
-], function(QUI, QUIControl, QUIButton, QUIAlert, QRCode, Call)
+], function(QUI, QUIControl, QUIButton, QUIAlert, QRCode, Stellar)
 {
     "use strict";
 
@@ -38,7 +37,9 @@ define([
             "public_key"      : "",
             "public_key_hex"  : "",
             "status"          : "",
-            "server"          : ""
+            "server"          : "",
+
+            "refresh"         : "10000" // every 10 seconds
         },
 
         initialize : function(options)
@@ -50,6 +51,9 @@ define([
             this.$DataContainer   = null;
             this.$Buttons         = null;
             this.$Balance         = null;
+            this.$Stellar         = new Stellar();
+
+            this.$refreshIntervall = null;
 
             this.addEvents({
                 onInject : this.$onInject
@@ -151,57 +155,93 @@ define([
             }, {
                 callback : function()
                 {
-                    self.getAccountInfo(function(result)
+                    self.refresh(function(result)
                     {
-                        var width = self.$QRCodeContainer.getSize().x;
-
-                        if ( width > 400 ) {
-                            width = 400;
-                        }
-
-                        // create qr code
-                        self.$QRCode = new QRCode({
-                            height : width,
-                            width  : width,
-                            styles : {
-                                margin : '20px auto'
-                            }
-                        }).inject( self.$QRCodeContainer );
-
-                        self.$QRCode.setData({
-                            "account_id"      : self.getAttribute( 'account_id' ),
-                            "server"          : self.getAttribute( 'server' ),
-                            //"master_seed"     : this.getAttribute( 'master_seed' ),
-                            //"master_seed_hex" : this.getAttribute( 'master_seed_hex' ),
-                            "public_key"      : self.getAttribute( 'public_key' ),
-                            "public_key_hex"  : self.getAttribute( 'public_key_hex' ),
-                            "status"          : self.getAttribute( 'status' )
-                        });
-
-
-
-                        if ( typeof result.result.error !== 'undefined' )
+                        if ( !result )
                         {
-                            if ( result.result.error_code != 15 )
-                            {
-                                new QUIAlert({
-                                    content : result.result.error_message
-                                }).open();
-
-                                self.fireEvent( 'loadError' );
-                                return;
-                            }
-
-                            // no balance?
-                            self.$Balance.set( 'html', 'Balance: 0 STR' );
-                            self.fireEvent( 'loaded' );
+                            self.fireEvent( 'loadError' );
                             return;
                         }
 
-                        console.log( result );
-
                         self.fireEvent( 'loaded' );
+
+                        // intervall refresh
                     });
+                }
+            });
+        },
+
+        /**
+         * refresh the wallet infos and display
+         *
+         * @param {Function} callback - [optional] callback function
+         */
+        refresh : function(callback)
+        {
+            var self = this;
+
+            this.$Stellar.getAccountInfo( this.getAttribute( 'account_id' ), function(result)
+            {
+                // create qr code, if not created
+                if ( !self.$QRCode )
+                {
+                    var width = self.$QRCodeContainer.getSize().x;
+
+                    if ( width > 400 ) {
+                        width = 400;
+                    }
+
+                    // create qr code
+                    self.$QRCode = new QRCode({
+                        height : width,
+                        width  : width,
+                        styles : {
+                            margin : '20px auto'
+                        }
+                    }).inject( self.$QRCodeContainer );
+
+                    self.$QRCode.setData({
+                        "account_id"      : self.getAttribute( 'account_id' ),
+                        "server"          : self.getAttribute( 'server' ),
+                        //"master_seed"     : this.getAttribute( 'master_seed' ),
+                        //"master_seed_hex" : this.getAttribute( 'master_seed_hex' ),
+                        "public_key"      : self.getAttribute( 'public_key' ),
+                        "public_key_hex"  : self.getAttribute( 'public_key_hex' ),
+                        "status"          : self.getAttribute( 'status' )
+                    });
+                }
+
+
+                if ( typeof result.result.error !== 'undefined' )
+                {
+                    if ( result.result.error_code != 15 )
+                    {
+                        new QUIAlert({
+                            content : result.result.error_message
+                        }).open();
+
+                        if ( typeof callback !== 'undefined' ) {
+                            callback( false );
+                        }
+
+                        return;
+                    }
+
+                    // no balance?
+                    self.$Balance.set( 'html', 'Balance: 0 STR' );
+
+                    if ( typeof callback !== 'undefined' ) {
+                        callback( result );
+                    }
+
+                    return;
+                }
+
+
+                console.log( result );
+
+                if ( typeof callback !== 'undefined' ) {
+                    callback( result );
                 }
             });
         },
@@ -231,23 +271,6 @@ define([
                 null,
                 self.$QRCode.getImage()
             );
-
-
-            /*
-            window.plugin.email.isServiceAvailable(function (isAvailable)
-            {
-                if ( !isAvailable )
-                {
-
-                    return;
-                }
-
-                window.plugin.email.open({
-                    subject     : 'Stellar Paper Wallet',
-                    attachments : [ self.$QRCode.getImage() ]
-                });
-            });
-            */
         },
 
 
@@ -256,27 +279,41 @@ define([
          */
 
         /**
-         * Return the account info
+         * Send the paper wallet account to a stellar address
          *
+         * @param {String} destination - Address that receives the stellar
          * @param {Function} callback
          */
-        getAccountInfo : function(callback)
+        sendAmountTo : function(receiver, callback)
         {
-            new Call({
-                server : this.getAttribute( 'server' )
-            }).post(function(result)
+            var self = this;
+
+            this.$Stellar.getAccountInfo( this.getAttribute( 'account_id' ), function(result)
             {
-                callback( result );
+                console.log( result );
 
-            }, {
-                method: "account_info",
-                params: [{
-                     account: this.getAttribute( 'account_id' ),
-                     ledger_index: 400
-                }]
+
+
+                self.$Stellar.request('submit', {
+                    "secret"  : self.getAttribute( 'public_key' ),
+                    "tx_json" : {
+                        "TransactionType" : "Payment",
+                        "Account"         : self.getAttribute( 'account_id' ),
+                        "Destination"     : receiver,
+                        "Amount": {
+                            "currency" : "STR",
+                            "value"    : "2",
+                            "issuer"   : self.getAttribute( 'account_id' )
+                        }
+                    }
+                }, function(result)
+                {
+
+                    callback( result );
+                });
+
             });
-        },
-
+        }
     });
 
 });

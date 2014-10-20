@@ -2,6 +2,7 @@
 /**
  * Main app
  *
+ * @module App
  * @author www.pcsg.de (Henning Leutz)
  *
  * @require qui/QUI
@@ -18,12 +19,12 @@ define([
     'qui/controls/buttons/Button',
     'qui/controls/windows/Alert',
     'menu/Responsive',
-    'Call',
-    'Wallet',
+    'request/Stellar',
+    'wallet/Wallet',
 
     'css!App.css'
 
-], function(QUI, QUIControl, QUILoader, QUIButton, QUIAlert, Menu, Call, Wallet)
+], function(QUI, QUIControl, QUILoader, QUIButton, QUIAlert, Menu, Stellar, Wallet)
 {
     "use strict";
 
@@ -43,9 +44,10 @@ define([
             this.Loader = new QUILoader();
             this.Menu   = new Menu();
 
-            this.$Header = null;
-            this.$Body   = null;
-            this.$Wallet = null;
+            this.$Header  = null;
+            this.$Body    = null;
+            this.$Wallet  = null;
+            this.$Stellar = new Stellar();
 
             this.$MenuButton = null;
 
@@ -195,7 +197,7 @@ define([
 
             this.Loader.show();
 
-            require(['Wallet'], function(Wallet)
+            require(['wallet/Wallet'], function(Wallet)
             {
                 self.$Wallet = new Wallet( walletData ).inject( self.$Body );
 
@@ -303,24 +305,21 @@ define([
          */
         createNewWallet : function()
         {
-            var self    = this,
-                Request = new Call();
+            var self = this;
 
             this.Loader.show( 'Create cold wallet ... one moment please ...' );
 
-            Request.post(function(walletData)
+
+            this.$Stellar.createWallet(function(walletData)
             {
                 if ( walletData.result )
                 {
                     var data = walletData.result;
 
-                    data.server = Request.getAttribute( 'server' );
+                    data.server = self.$Stellar.getAttribute( 'server' );
 
                     self.openWallet( data );
                 }
-
-            }, {
-                method : "create_keys"
             });
         }
     });

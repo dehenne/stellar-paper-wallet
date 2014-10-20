@@ -10,7 +10,7 @@ define(['qui/classes/DOM'], function(QDOM)
     return new Class({
 
         Extends : QDOM,
-        Type    : 'Call',
+        Type    : 'request/Call',
 
         options : {
             server : 'https://test.stellar.org:9002'
