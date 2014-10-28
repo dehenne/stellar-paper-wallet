@@ -2,7 +2,7 @@
 require.config({
     baseUrl : 'js/',
     paths : {
-        'qui' : 'qui/build/qui'
+        'qui' : 'qui/qui'
     },
     map : {
         '*': {

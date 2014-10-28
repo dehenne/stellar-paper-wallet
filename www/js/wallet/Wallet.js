@@ -100,7 +100,7 @@ define([
 
             new QUIButton({
                 textimage : 'fa fa-envelope',
-                text      : 'Send / Save',
+                text      : 'Send / Save QR Code',
                 events    : {
                     onClick : function() {
                         self.sendQRCode();

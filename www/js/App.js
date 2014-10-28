@@ -18,13 +18,14 @@ define([
     'qui/controls/loader/Loader',
     'qui/controls/buttons/Button',
     'qui/controls/windows/Alert',
+    'qui/controls/desktop/panels/Sheet',
     'menu/Responsive',
     'request/Stellar',
     'wallet/Wallet',
 
     'css!App.css'
 
-], function(QUI, QUIControl, QUILoader, QUIButton, QUIAlert, Menu, Stellar, Wallet)
+], function(QUI, QUIControl, QUILoader, QUIButton, QUIAlert, QUISheet, Menu, Stellar, Wallet)
 {
     "use strict";
 
@@ -46,8 +47,11 @@ define([
 
             this.$Header  = null;
             this.$Body    = null;
-            this.$Wallet  = null;
             this.$Stellar = new Stellar();
+
+            this.$Wallet   = null;
+            this.$Settings = null;
+            this.$About    = null;
 
             this.$MenuButton = null;
 
@@ -86,17 +90,23 @@ define([
             this.Menu.appendChild({
                 text   : 'Settings',
                 icon   : 'fa fa-gears',
-                events : {
-                    click : function() {
-                        alert( 'settings' );
+                events :
+                {
+                    click : function()
+                    {
+                        self.openSettings();
+                        self.Menu.hide();
                     }
                 }
             }).appendChild({
                 text : 'About',
                 icon : 'fa fa-info',
-                events : {
-                    click : function() {
-                        alert( 'about' );
+                events :
+                {
+                    click : function()
+                    {
+                        self.openAbout();
+                        self.Menu.hide();
                     }
                 }
             })
@@ -227,8 +237,45 @@ define([
                         self.Loader.hide();
                     },
                 });
-
             });
+        },
+
+        /**
+         * Opens the settings
+         */
+        openSettings : function()
+        {
+            if ( this.$Settings )
+            {
+                this.$Settings.show();
+                return
+            }
+
+            this.$Settings = new QUISheet({
+                title : 'Settings'
+            });
+
+            this.$Settings.inject( document.body );
+            this.$Settings.show();
+        },
+
+        /**
+         * Opens the about sheet
+         */
+        openAbout : function()
+        {
+            if ( this.$About )
+            {
+                this.$About.show();
+                return
+            }
+
+            this.$About = new QUISheet({
+                title : 'About'
+            });
+
+            this.$About.inject( document.body );
+            this.$About.show();
         },
 
         /**

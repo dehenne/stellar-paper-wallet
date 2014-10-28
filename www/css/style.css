@@ -60,3 +60,24 @@ a.qui-button {
 .qui-windows-alert .qui-window-popup-content {
     text-align: center;
 }
+
+.qui-panel-sheet-header {
+    background: #FFF !important;
+    border-bottom: 4px solid #08b5e5 !important;
+    color: #08b5e5 !important;
+    font-size: 20px !important;
+    font-weight: normal !important;
+    height: 60px !important;
+    line-height: 60px !important;
+}
+
+.qui-panel-sheet-header button {
+    color: #08b5e5 !important;
+    font-size: 20px !important;
+    height: 60px !important;
+    line-height: 60px !important;
+}
+
+.qui-panel-sheet-header button:hover {
+    color: #fff !important;
+}

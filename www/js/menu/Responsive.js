@@ -198,7 +198,7 @@ define([
                 opacity : 0
             }, {
                 duration : 250,
-                equation : 'ease-in'
+                equation : 'ease-out'
             });
         }
     });
