@@ -261,6 +261,35 @@ define([
                 closeButton : {
                     text : QUILocale.get( lg, 'sheetButton' ),
                     textimage : 'fa fa-chevron-left'
+                },
+                events :
+                {
+                    onOpen : function(Sheet)
+                    {
+                        var Content = Sheet.getContent();
+
+                        Content.set({
+                            styles : {
+                                padding : 20
+                            },
+                            html : '<h2 class="settings-header">Generally</h2>'+
+                                   '<div class="settings-entry">'+
+                                       '<div class="settings-entry-action">'+
+                                           '<select name="">'+
+                                               '<option value="">English</option>'+
+                                               '<option value="">German</option>'+
+                                           '</select>'+
+                                       '</div>'+
+                                       '<span class="settings-entry-text">'+
+                                           'Stellar Wallet App Language'+
+                                       '</span>'+
+                                   '</div>'
+                        });
+
+//                        * Refresh Intervall for a wallet
+//                        * Create Server
+//                        * Language
+                    }
                 }
             });
 

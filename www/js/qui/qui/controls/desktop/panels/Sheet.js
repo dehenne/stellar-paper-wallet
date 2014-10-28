@@ -112,7 +112,7 @@ define([
 
             // sub close button
             var closeButton = this.getAttribute( 'closeButton' );
-console.log( closeButton );
+
             var CloseButton = new Button({
                 text      : closeButton.text || 'schließen / abbrechen',
                 textimage : closeButton.textimage || false,

@@ -79,3 +79,40 @@
     font-size: 100px;
     margin-bottom: 20px;
 }
+
+
+
+
+/** app settings
+ * ================================================  */
+
+.settings-entry {
+    clear: both;
+    float: left;
+    width: 100%;
+}
+
+.settings-entry-action {
+    float: left;
+    width: 20%;
+}
+
+.settings-entry-text {
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px;
+    width: 80%;
+}
+
+.settings-entry input,
+.settings-entry select {
+    background: #ffffff;
+    border: 1px solid #999;
+    border-radius: 3px;
+    height: 40px;
+    line-height: 40px;
+    padding: 5px 10px;
+    width: 100%;
+}
+
