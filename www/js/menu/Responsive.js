@@ -141,7 +141,7 @@ define([
 
             var self  = this,
                 size  = document.body.getSize(),
-                width = 400;
+                width = 350;
 
             if ( width > size.x * 0.9 ) {
                 width = size.x * 0.9;
@@ -163,7 +163,9 @@ define([
             }
 
             this.$Elm.setStyles({
-                width : width
+                boxShadow : '0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+                opacity   : 1,
+                width     : width
             });
 
             this.$Content.setStyles({
@@ -173,8 +175,10 @@ define([
             this.$FX.animate({
                 left : 0
             }, {
+                duration : 250,
+                equation : 'ease-out',
                 callback : function() {
-
+                    self.$Elm.setStyle( 'boxShadow', null );
                 }
             });
         },
@@ -187,8 +191,14 @@ define([
             this.$show = false;
             this.$Background.hide();
 
+            this.$Elm.setStyle( 'boxShadow', '0 6px 20px 0 rgba(0, 0, 0, 0.19)' );
+
             this.$FX.animate({
-                left : '-100%'
+                left    : '-100%',
+                opacity : 0
+            }, {
+                duration : 250,
+                equation : 'ease-in'
             });
         }
     });
