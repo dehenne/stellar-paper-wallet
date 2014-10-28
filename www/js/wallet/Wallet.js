@@ -129,8 +129,10 @@ define([
         close : function(callback)
         {
             moofx( this.$Elm ).animate({
-                left : '-110%'
+                left    : '-110%',
+                opacity : 0
             }, {
+                equation : 'ease-in',
                 callback : function() {
                     this.destroy();
 
@@ -153,6 +155,7 @@ define([
             moofx( this.$Elm ).animate({
                 left : 0
             }, {
+                equation : 'ease-out',
                 callback : function()
                 {
                     self.refresh(function(result)
