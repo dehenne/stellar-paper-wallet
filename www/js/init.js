@@ -31,7 +31,6 @@ var Init = function()
     var needles = ['qui/QUI', 'qui/Locale'];
         needles.push( 'locale/'+ language );
 
-    console.log( needles );
 
     // load app
     require( needles, function(QUI, QUILocale)

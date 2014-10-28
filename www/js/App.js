@@ -30,6 +30,8 @@ define([
 {
     "use strict";
 
+    var lg = 'pcsg/stellar-wallet';
+
     return new Class({
 
         Extends : QUIControl,
@@ -255,7 +257,11 @@ define([
             }
 
             this.$Settings = new QUISheet({
-                title : 'Settings'
+                title : 'Settings',
+                closeButton : {
+                    text : QUILocale.get( lg, 'sheetButton' ),
+                    textimage : 'fa fa-chevron-left'
+                }
             });
 
             this.$Settings.inject( document.body );
@@ -275,12 +281,16 @@ define([
 
             this.$About = new QUISheet({
                 title  : 'About',
+                closeButton : {
+                    text : QUILocale.get( lg, 'sheetButton' ),
+                    textimage : 'fa fa-chevron-left'
+                },
                 events :
                 {
                     onOpen : function(Sheet)
                     {
                         Sheet.getContent().set({
-                            html   : QUILocale.get( 'pcsg/stellar-wallet', 'about' ),
+                            html   : QUILocale.get( lg, 'about' ),
                             styles : {
                                 padding : 20
                             }

@@ -6,6 +6,8 @@ define(['qui/Locale'], function(QUILocale)
 
     QUILocale.set('en', 'pcsg/stellar-wallet', {
 
+        sheetButton : 'Close',
+
         about : '' +
             '<h1>Stellar-Paper-Wallet</h1>' +
             '<p>Smartphone App for creating and handling stellar paper wallets.</p>' +
