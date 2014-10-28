@@ -39,7 +39,7 @@ define([
             "status"          : "",
             "server"          : "",
 
-            "refresh"         : "10000" // every 10 seconds
+            "refresh"         : 10000 // every 10 seconds
         },
 
         initialize : function(options)
@@ -169,6 +169,11 @@ define([
                         self.fireEvent( 'loaded' );
 
                         // intervall refresh
+                        self.$refreshIntervall = (function()
+                        {
+                            self.refresh();
+
+                        }).periodical( self.getAttribute( 'refresh' ) );
                     });
                 }
             });
@@ -234,17 +239,22 @@ define([
                     self.$Balance.set( 'html', 'Balance: 0 STR' );
 
                     if ( typeof callback !== 'undefined' ) {
-                        callback( result );
+                        callback( result.result );
                     }
 
                     return;
                 }
 
-
-                console.log( result );
+                if ( typeof result.result.account_data !== 'undefined' )
+                {
+                    self.$Balance.set(
+                        'html',
+                        'Balance: '+ result.result.account_data.Balance +' STR'
+                    );
+                }
 
                 if ( typeof callback !== 'undefined' ) {
-                    callback( result );
+                    callback( result.result );
                 }
             });
         },
@@ -293,7 +303,17 @@ define([
 
             this.$Stellar.getAccountInfo( this.getAttribute( 'account_id' ), function(result)
             {
-                console.log( result );
+                if ( typeof result.account_data === 'undefined' ) {
+                    return;
+                }
+
+                if ( typeof result.account_data.Balance === 'undefined' ) {
+                    return;
+                }
+
+                if ( !result.account_data.Balance ) {
+                    return;
+                }
 
 
 
@@ -305,8 +325,8 @@ define([
                         "Destination"     : receiver,
                         "Amount": {
                             "currency" : "STR",
-                            "value"    : "2",
-                            "issuer"   : self.getAttribute( 'account_id' )
+                            "value"    : result.account_data.Balance,
+                            "issuer"   : receiver
                         }
                     }
                 }, function(result)
