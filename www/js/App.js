@@ -19,13 +19,14 @@ define([
     'qui/controls/buttons/Button',
     'qui/controls/windows/Alert',
     'qui/controls/desktop/panels/Sheet',
+    'qui/Locale',
     'menu/Responsive',
     'request/Stellar',
     'wallet/Wallet',
 
     'css!App.css'
 
-], function(QUI, QUIControl, QUILoader, QUIButton, QUIAlert, QUISheet, Menu, Stellar, Wallet)
+], function(QUI, QUIControl, QUILoader, QUIButton, QUIAlert, QUISheet, QUILocale, Menu, Stellar, Wallet)
 {
     "use strict";
 
@@ -94,8 +95,9 @@ define([
                 {
                     click : function()
                     {
-                        self.openSettings();
-                        self.Menu.hide();
+                        self.Menu.hide(function() {
+                            self.openSettings();
+                        });
                     }
                 }
             }).appendChild({
@@ -105,8 +107,9 @@ define([
                 {
                     click : function()
                     {
-                        self.openAbout();
-                        self.Menu.hide();
+                        self.Menu.hide(function() {
+                            self.openAbout();
+                        });
                     }
                 }
             })
@@ -271,7 +274,19 @@ define([
             }
 
             this.$About = new QUISheet({
-                title : 'About'
+                title  : 'About',
+                events :
+                {
+                    onOpen : function(Sheet)
+                    {
+                        Sheet.getContent().set({
+                            html   : QUILocale.get( 'pcsg/stellar-wallet', 'about' ),
+                            styles : {
+                                padding : 20
+                            }
+                        });
+                    }
+                }
             });
 
             this.$About.inject( document.body );

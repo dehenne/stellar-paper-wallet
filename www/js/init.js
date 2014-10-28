@@ -14,7 +14,27 @@ require.config({
 
 var Init = function()
 {
-    require(['qui/QUI'], function(QUI)
+    // locale language
+    var language = window.localStorage.getItem( "settings.language" );
+
+    switch ( language )
+    {
+        case 'de':
+        case 'en':
+        break;
+
+        default:
+            language = 'en';
+        break;
+    }
+
+    var needles = ['qui/QUI', 'qui/Locale'];
+        needles.push( 'locale/'+ language );
+
+    console.log( needles );
+
+    // load app
+    require( needles, function(QUI, QUILocale)
     {
         QUI.addEvent('onError', function( err, url, line )
         {
@@ -24,6 +44,9 @@ var Init = function()
                 console.warn( new Error().stack );
             }
         });
+
+        // QUILocale.setCurrent();
+
 
         require(['App'], function(App) {
             new App().inject( document.body );

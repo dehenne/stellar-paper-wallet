@@ -34,8 +34,21 @@ header, footer {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #21536f;
+    color: #08b5e5;
     font-weight: 400;
+    padding: 0 0 10px;
+}
+
+h2, h3, h4, h5, h6 {
+    padding: 20px 0 10px;
+}
+
+ul, ol {
+    padding: 10px 0 0 20px;
+}
+
+li {
+    padding: 0 0 10px 0;
 }
 
 /** qui elements

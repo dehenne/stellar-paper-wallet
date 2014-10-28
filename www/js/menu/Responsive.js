@@ -134,8 +134,10 @@ define([
 
         /**
          * Show the menu
+         *
+         * @param {Function} callback
          */
-        show : function()
+        show : function(callback)
         {
             this.$show = true;
 
@@ -177,16 +179,23 @@ define([
             }, {
                 duration : 250,
                 equation : 'ease-out',
-                callback : function() {
+                callback : function()
+                {
                     self.$Elm.setStyle( 'boxShadow', null );
+
+                    if ( typeof callback !== 'undefined' ) {
+                        callback();
+                    }
                 }
             });
         },
 
         /**
          * hide the menu
+         *
+         * @param {Function} callback
          */
-        hide : function()
+        hide : function(callback)
         {
             this.$show = false;
             this.$Background.hide();
@@ -198,7 +207,13 @@ define([
                 opacity : 0
             }, {
                 duration : 250,
-                equation : 'ease-out'
+                equation : 'ease-out',
+                callback : function()
+                {
+                    if ( typeof callback !== 'undefined' ) {
+                        callback();
+                    }
+                }
             });
         }
     });
