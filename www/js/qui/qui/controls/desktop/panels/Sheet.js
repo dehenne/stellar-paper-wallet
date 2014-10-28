@@ -179,9 +179,10 @@ define([
                 size    = Parent.getSize();
 
             Elm.setStyles({
-                visibility : null,
+                boxShadow  : '0 6px 20px 0 rgba(0, 0, 0, 0.19)',
                 left       : (size.x + 50) * -1,
-                height     : size.y
+                height     : size.y,
+                visibility : null
             });
 
             Elm.setStyle( 'display', null );
@@ -205,7 +206,7 @@ define([
             });
 
             var CloseButton = new Button({
-                text : 'schließen / abbrechen',
+                text      : 'schließen / abbrechen',
                 textimage : 'icon-remove',
                 events : {
                     onClick : this.hide.bind( this )
@@ -213,7 +214,7 @@ define([
             });
 
             new Button({
-                icon : 'icon-remove',
+                icon   : 'icon-remove',
                 styles : {
                     'float' : 'right'
                 },
@@ -228,6 +229,7 @@ define([
             this.$FX.animate({
                 left : 0
             }, {
+                equation : 'ease-out',
                 callback : this.$fxComplete
             });
 
@@ -246,9 +248,14 @@ define([
                 Parent = Elm.getParent(),
                 size   = Parent.getSize();
 
+            Elm.setStyle( 'boxShadow', '0 6px 20px 0 rgba(0, 0, 0, 0.19)' );
+
+
             this.$FX.animate({
-                left : (size.x + 50) * -1
+                left    : (size.x + 50) * -1,
+                opacity : 0
             }, {
+                equation : 'ease-in',
                 callback : this.$fxComplete
             });
 
@@ -265,6 +272,8 @@ define([
         {
             if ( this.getElm().getStyle('left').toInt() >= 0 )
             {
+                this.getElm().setStyle( 'boxShadow', null );
+
                 this.fireEvent( 'open', [ this ] );
                 return;
             }

@@ -106,7 +106,10 @@ define([
                           '</div>' +
                           '<div class="qui-window-popup-content box"></div>'+
                           '<div class="qui-window-popup-buttons box"></div>',
-                tabindex : -1
+                tabindex : -1,
+                styles : {
+                    left : '-100%'
+                }
             });
 
             this.$Title     = this.$Elm.getElement( '.qui-window-popup-title' );
@@ -184,7 +187,7 @@ define([
                 });
             }
 
-            if ( this.getAttribute( 'buttons' ) === false ) {
+            if ( !this.getAttribute( 'buttons' ) ) {
                 this.$Buttons.setStyle( 'display', 'none' );
             }
 
@@ -210,6 +213,8 @@ define([
          */
         open : function()
         {
+            var self = this;
+
             this.Background.create();
 
             this.Background.getElm().addEvent(
@@ -220,10 +225,50 @@ define([
             this.Background.show();
             this.inject( document.body );
 
-            document.body.addClass( 'noscroll' );
 
-            this.resize( true );
-            this.fireEvent( 'open', [ this ] );
+            // touch body fix
+            this.$oldBodyStyle = {
+                overflow : document.body.style.overflow,
+                position : document.body.style.position,
+                width    : document.body.style.width,
+                top      : document.body.style.top,
+                scroll   : document.body.getScroll()
+            };
+
+            document.body.setStyles({
+                width : document.body.getSize().x
+            });
+
+            document.body.setStyles({
+                overflow : 'hidden',
+                position : 'fixed',
+                top      : this.$oldBodyStyle.scroll.y * -1
+            });
+
+            (function()
+            {
+                var bodyWidth = document.body.getStyle('width').toInt(),
+                    docWidth  = document.getSize().x;
+
+                if ( docWidth - bodyWidth )
+                {
+                    new Element('div', {
+                        'class' : '__qui-scroll-bar-placeholder',
+                        styles : {
+                            background: '#CCC',
+                            height: '100%',
+                            position: 'fixed',
+                            right : 0,
+                            top   : 0,
+                            width : docWidth - bodyWidth
+                        }
+                    }).inject( document.body );
+                }
+
+                self.resize( true );
+                self.fireEvent( 'open', [ self ] );
+
+            }).delay( 20 );
         },
 
         /**
@@ -269,9 +314,15 @@ define([
             this.$Elm.setStyles({
                 height   : height,
                 width    : width,
-                left     : left,
                 top      : top
             });
+
+            if ( withfx === false )
+            {
+                this.$Elm.setStyles({
+                    left : left
+                });
+            }
 
             if ( this.$Buttons )
             {
@@ -307,7 +358,7 @@ define([
 
             var left = ( doc_size.x - width ) / 2;
 
-            if ( !withfx )
+            if ( withfx == false )
             {
                 this.$Elm.setStyle( 'left', left );
                 this.fireEvent( 'resize', [ this ] );
@@ -319,6 +370,7 @@ define([
             moofx( this.$Elm ).animate({
                 left : left
             }, {
+                equation : 'ease-out',
                 callback : function()
                 {
                     self.$Elm.focus();
@@ -336,6 +388,25 @@ define([
         {
             window.removeEvent( 'resize', this.resize );
 
+            document.getElements( '.__qui-scroll-bar-placeholder' ).destroy();
+
+            // set old body attributes
+            if ( typeof this.$oldBodyStyle !== 'undefined' )
+            {
+                document.body.setStyles({
+                    overflow : this.$oldBodyStyle.overflow || null,
+                    position : this.$oldBodyStyle.position || null,
+                    width    : this.$oldBodyStyle.width || null,
+                    top      : this.$oldBodyStyle.top || null,
+                });
+
+                document.body.scrollTo(
+                    this.$oldBodyStyle.scroll.x,
+                    this.$oldBodyStyle.scroll.y
+                );
+            }
+
+
             if ( !this.$Elm ) {
                 return;
             }
@@ -343,18 +414,16 @@ define([
             var self = this;
 
             moofx( this.$Elm ).animate({
-                left : document.getSize().x * -1
+                left    : document.getSize().x * -1,
+                opacity : 0
             }, {
+                equation : 'ease-in',
                 callback : function()
                 {
                     self.fireEvent( 'close', [ self ] );
 
                     self.$Elm.destroy();
                     self.Background.destroy();
-
-                    if ( !document.body.getElement( 'cls-background' ) ) {
-                        document.body.removeClass( 'noscroll' );
-                    }
                 }
             });
         },
@@ -421,8 +490,6 @@ define([
             this.$Buttons.setStyles({
                 height  : Node.getComputedSize().totalHeight
             });
-
-            this.resize();
 
             return this;
         },
