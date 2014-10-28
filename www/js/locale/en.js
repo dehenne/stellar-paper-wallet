@@ -27,15 +27,15 @@ define(['qui/Locale'], function(QUILocale)
 
             '<h2>Resources</h2>' +
             '<ul>' +
-                '<li>Introducing Stellar - https://www.stellar.org/blog/introducing-stellar/</li>' +
-                '<li>Stellar Developers - https://www.stellar.org/developers/</li>' +
-                '<li>What is a paper wallet - https://en.bitcoin.it/wiki/Paper_wallet</li>' +
+                '<li>Introducing Stellar - <a href="https://www.stellar.org/blog/introducing-stellar/">https://www.stellar.org/blog/introducing-stellar/</a></li>' +
+                '<li>Stellar Developers - <a href="https://www.stellar.org/developers/">https://www.stellar.org/developers/</a></li>' +
+                '<li>What is a paper wallet - <a href="https://en.bitcoin.it/wiki/Paper_wallet">https://en.bitcoin.it/wiki/Paper_wallet</a></li>' +
             '</ul>' +
 
             '<h2>Contribute</h2>' +
             '<ul>' +
-                '<li>Issue Tracker: github.com/dehenne/stellar-paper-wallet/issues</li>' +
-                '<li>Source Code: github.com/dehenne/stellar-paper-wallet</li>' +
+                '<li>Issue Tracker: <a href="https://github.com/dehenne/stellar-paper-wallet/issues">github.com/dehenne/stellar-paper-wallet/issues</a></li>' +
+                '<li>Source Code: <a href="https://github.com/dehenne/stellar-paper-wallet">github.com/dehenne/stellar-paper-wallet</a></li>' +
             '</ul>' +
 
             '<h2>Support</h2>' +

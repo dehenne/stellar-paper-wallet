@@ -206,7 +206,6 @@ define([
                 left    : '-100%',
                 opacity : 0
             }, {
-                duration : 250,
                 equation : 'ease-out',
                 callback : function()
                 {
